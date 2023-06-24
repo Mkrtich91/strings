@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Strings
 {
@@ -9,10 +10,10 @@ namespace Strings
         /// </summary>
         public static string CopyOneChar(string source, string destination)
         {
-            // TODO #10-1. Analyze unit tests for the method, and add the method implementation.
-            // Use String.ToCharArray method to transform a string to an array of characters: https://docs.microsoft.com/en-us/dotnet/api/system.string.tochararray
-            // Use String.CopyTo method to copy string characters to an array of characters: https://docs.microsoft.com/en-us/dotnet/api/system.string.copyto
-            throw new NotImplementedException();
+            char[] destinationArray = destination.ToCharArray();
+            source.CopyTo(0, destinationArray, 4, source.Length);
+
+            return new string(destinationArray);
         }
 
         /// <summary>
@@ -20,8 +21,8 @@ namespace Strings
         /// </summary>
         public static string CopyThreeChars(string source, string destination)
         {
-            // TODO #10-2. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string copiedChars = string.Concat(source.Take(3));
+            return copiedChars + (destination.Length > 3 ? destination[3..] : " ");
         }
 
         /// <summary>
@@ -29,8 +30,8 @@ namespace Strings
         /// </summary>
         public static string CopyFiveChars(string source, string destination)
         {
-            // TODO #10-3. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string copiedChars = new string(source.Take(5).ToArray());
+            return $"{destination[..Math.Min(4, destination.Length)]}{copiedChars}{destination[9..]}";
         }
 
         /// <summary>
@@ -38,8 +39,9 @@ namespace Strings
         /// </summary>
         public static string CopySixChars(string source, string destination)
         {
-            // TODO #10-4. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string copiedChars = source.Substring(2, 6);
+            string replacedDestination = destination.Replace("******", copiedChars, StringComparison.Ordinal);
+            return replacedDestination;
         }
 
         /// <summary>
@@ -47,8 +49,39 @@ namespace Strings
         /// </summary>
         public static string GetProductionCode(string template, string regionCode, string locationCode, string dateCode, string factoryCode)
         {
-            // TODO #10-5. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < template.Length; i++)
+            {
+                char currentChar = template[i];
+
+                if (i == 0 && currentChar == '*')
+                {
+                    result.Append(regionCode[1]);
+                }
+                else if (i >= 3 && i <= 4 && template.Substring(i, 2) == "**")
+                {
+                    result.Append(locationCode.AsSpan(4, 2));
+
+                    i++;
+                }
+                else if (i >= 7 && i <= 9 && template.Substring(i, 3) == "***")
+                {
+                    result.Append(dateCode.AsSpan(3, 3));
+                    i += 2;
+                }
+                else if (i >= 12 && i <= 15 && template.Substring(i, 4) == "****")
+                {
+                    result.Append(factoryCode.AsSpan(2, 4));
+                    i += 3;
+                }
+                else
+                {
+                    result.Append(currentChar);
+                }
+            }
+
+            return result.ToString();
         }
     }
 }

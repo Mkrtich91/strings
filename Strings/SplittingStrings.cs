@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Strings
 {
@@ -9,9 +10,7 @@ namespace Strings
         /// </summary>
         public static string[] SplitCommaSeparatedString(string str)
         {
-            // TODO #7-1. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Split method: https://docs.microsoft.com/en-us/dotnet/api/system.string.split
-            throw new NotImplementedException();
+            return str.Split(',');
         }
 
         /// <summary>
@@ -19,8 +18,8 @@ namespace Strings
         /// </summary>
         public static string[] SplitColonSeparatedString(string str)
         {
-            // TODO #7-2. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string[] substrings = str.Split(':');
+            return substrings;
         }
 
         /// <summary>
@@ -28,8 +27,8 @@ namespace Strings
         /// </summary>
         public static string[] SplitCommaSeparatedStringMaxTwoElements(string str)
         {
-            // TODO #7-3. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string[] substrings = str.Split(new[] { ',' }, 2);
+            return substrings;
         }
 
         /// <summary>
@@ -37,8 +36,8 @@ namespace Strings
         /// </summary>
         public static string[] SplitColonSeparatedStringMaxThreeElements(string str)
         {
-            // TODO #7-4. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string[] substrings = str.Split(new[] { ':' }, 3);
+            return substrings;
         }
 
         /// <summary>
@@ -46,8 +45,8 @@ namespace Strings
         /// </summary>
         public static string[] SplitHyphenSeparatedStringMaxThreeElementsRemoveEmptyStrings(string str)
         {
-            // TODO #7-5. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string[] substrings = str.Split(new[] { '-' }, 3, StringSplitOptions.RemoveEmptyEntries);
+            return substrings;
         }
 
         /// <summary>
@@ -55,8 +54,11 @@ namespace Strings
         /// </summary>
         public static string[] SplitColonAndCommaSeparatedStringMaxFourElementsRemoveEmptyStrings(string str)
         {
-            // TODO #7-6. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            char[] separators = { ':', ',' };
+
+            string[] substrings = str.Split(separators, 4, StringSplitOptions.RemoveEmptyEntries);
+
+            return substrings;
         }
 
         /// <summary>
@@ -64,8 +66,18 @@ namespace Strings
         /// </summary>
         public static string[] GetOnlyWords(string str)
         {
-            // TODO #7-7. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string pattern = @"\b\w+\b";
+
+            MatchCollection matches = Regex.Matches(str, pattern);
+
+            string[] words = new string[matches.Count];
+
+            for (int i = 0; i < matches.Count; i++)
+            {
+                words[i] = matches[i].Value;
+            }
+
+            return words;
         }
 
         /// <summary>
@@ -73,8 +85,13 @@ namespace Strings
         /// </summary>
         public static string[] GetDataFromCsvLine(string str)
         {
-            // TODO #7-8. Analyze unit tests for the method, and add the method implementation.
-            throw new NotImplementedException();
+            string[] csvElements = str.Split(',');
+            for (int i = 0; i < csvElements.Length; i++)
+            {
+                csvElements[i] = csvElements[i].Trim();
+            }
+
+            return csvElements;
         }
     }
 }

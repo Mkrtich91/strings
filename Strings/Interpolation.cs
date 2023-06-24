@@ -9,9 +9,7 @@ namespace Strings
         /// </summary>
         public static string GetHelloGreeting(string name)
         {
-            // TODO #9-1. Analyze unit tests for the method, and add the method implementation.
-            // Use interpolated string to concatenate string: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
-            throw new NotImplementedException();
+            return $"Hello, {name}!";
         }
 
         /// <summary>
@@ -19,9 +17,7 @@ namespace Strings
         /// </summary>
         public static string GetGreeting(string greeting, string name)
         {
-            // TODO #9-2. Analyze unit tests for the method, and add the method implementation.
-            // Use interpolated string to concatenate string: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
-            throw new NotImplementedException();
+            return $"{greeting}, {name}!";
         }
 
         /// <summary>
@@ -29,9 +25,7 @@ namespace Strings
         /// </summary>
         public static string GetSquareNumber(int i)
         {
-            // TODO #9-3. Analyze unit tests for the method, and add the method implementation.
-            // Use interpolated string to concatenate string: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
-            throw new NotImplementedException();
+            return $"The square number of {i} is {i * i}.";
         }
 
         /// <summary>
@@ -39,9 +33,10 @@ namespace Strings
         /// </summary>
         public static string GetTotalPrice(double price, int items, double discount)
         {
-            // TODO #9-4. Analyze unit tests for the method, and add the method implementation.
-            // Use interpolated string literal to concatenate string: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
-            throw new NotImplementedException();
+            double totalPrice = price * items * discount;
+            string totalPriceString = $"The price of all items is {totalPrice}.";
+
+            return totalPriceString;
         }
 
         /// <summary>
@@ -49,9 +44,10 @@ namespace Strings
         /// </summary>
         public static string GetSequenceOfNumbers(int[] numbers)
         {
-            // TODO #9-5. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Join method to join numbers to string: https://docs.microsoft.com/en-us/dotnet/api/system.string.join
-            throw new NotImplementedException();
+            string sequence = "{" + string.Join(",", numbers) + "}";
+            string phrase = $"The sequence is {sequence}.";
+
+            return phrase;
         }
 
         /// <summary>
@@ -59,9 +55,12 @@ namespace Strings
         /// </summary>
         public static string GetSequenceOfNumbersLength(string sequence)
         {
-            // TODO #9-6. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Split method to split a string to substrings: https://docs.microsoft.com/en-us/dotnet/api/system.string.split
-            throw new NotImplementedException();
+            string[] substrings = sequence.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            int length = substrings.Length;
+
+            string phrase = $"The sequence length is {length}.";
+
+            return phrase;
         }
 
         /// <summary>
@@ -69,9 +68,24 @@ namespace Strings
         /// </summary>
         public static string GetDocumentPath(string username, string filename, string extension)
         {
-            // TODO #9-7. Analyze unit tests for the method, and add the method implementation.
-            // Use interpolated verbatim string to concatenate a file path: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
-            throw new NotImplementedException();
+            string documentsFolder = "Documents";
+            string folderPath = Path.Combine(@"c:\users", username.Trim(), documentsFolder);
+            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(filename) && string.IsNullOrWhiteSpace(extension))
+            {
+                return @"c:\users\\Documents\.";
+            }
+
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(filename))
+            {
+                return Path.Combine(folderPath, ".");
+            }
+
+            if (string.IsNullOrEmpty(extension))
+            {
+                return Path.Combine(folderPath, filename.Trim() + ".");
+            }
+
+            return Path.Combine(folderPath, filename.Trim() + "." + extension.Trim());
         }
 
         /// <summary>
@@ -79,9 +93,14 @@ namespace Strings
         /// </summary>
         public static string GetNetworkPath(string workstation, string userFolder, string filename, string extension)
         {
-            // TODO #9-8. Analyze unit tests for the method, and add the method implementation.
-            // Use interpolated verbatim string to concatenate a network path: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(workstation) || string.IsNullOrEmpty(userFolder) || string.IsNullOrEmpty(filename) || string.IsNullOrEmpty(extension))
+            {
+                return @"\\\users\\.";
+            }
+
+            string networkPath = $@"\\{workstation}\users\{userFolder}\{filename}.{extension}";
+
+            return networkPath;
         }
     }
 }

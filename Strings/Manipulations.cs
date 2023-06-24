@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Strings
 {
@@ -9,9 +10,7 @@ namespace Strings
         /// </summary>
         public static string GetHelloGreeting1(string name)
         {
-            // TODO #8-1. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Insert: https://docs.microsoft.com/en-us/dotnet/api/system.string.insert
-            throw new NotImplementedException();
+            return $"Hello, {name}!";
         }
 
         /// <summary>
@@ -19,9 +18,8 @@ namespace Strings
         /// </summary>
         public static string GetGreeting1(string greeting, string name)
         {
-            // TODO #8-2. Analyze unit tests for the method, and add the method implementation.
-            // Use String.ToUpperInvariant to convert the name argument to uppercase: https://docs.microsoft.com/en-us/dotnet/api/system.string.toupperinvariant
-            throw new NotImplementedException();
+            string upperCaseName = name.ToUpperInvariant();
+            return $"{greeting}, {upperCaseName}!";
         }
 
         /// <summary>
@@ -29,9 +27,8 @@ namespace Strings
         /// </summary>
         public static string GetHelloGreeting2(string name)
         {
-            // TODO #8-3. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Trim to remove all leading and trailing spaces: https://docs.microsoft.com/en-us/dotnet/api/system.string.trim
-            throw new NotImplementedException();
+            string trimmedName = name.Trim();
+            return $"Hello, {trimmedName}!";
         }
 
         /// <summary>
@@ -39,9 +36,12 @@ namespace Strings
         /// </summary>
         public static string GetGreeting2(string greeting, string name)
         {
-            // TODO #8-4. Analyze unit tests for the method, and add the method implementation.
-            // Use String.ToLowerInvariant to convert the name argument to lowercase: https://docs.microsoft.com/en-us/dotnet/api/system.string.tolowerinvariant
-            throw new NotImplementedException();
+            string trimmedGreeting = greeting.Trim();
+            string trimmedName = name.Trim();
+            string lowercaseName = trimmedName.ToLowerInvariant();
+            string formattedGreeting = $"{trimmedGreeting}, {lowercaseName}!";
+
+            return formattedGreeting;
         }
 
         /// <summary>
@@ -49,9 +49,7 @@ namespace Strings
         /// </summary>
         public static string GetHelloGreeting3(string template, string name)
         {
-            // TODO #8-5. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Replace: https://docs.microsoft.com/en-us/dotnet/api/system.string.replace
-            throw new NotImplementedException();
+            return template.Replace("{name}", name, StringComparison.InvariantCulture);
         }
 
         /// <summary>
@@ -59,9 +57,11 @@ namespace Strings
         /// </summary>
         public static string GetGreeting3(string template, string greeting, string name)
         {
-            // TODO #8-6. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Replace: https://docs.microsoft.com/en-us/dotnet/api/system.string.replace
-            throw new NotImplementedException();
+            CultureInfo culture = CultureInfo.InvariantCulture;
+
+            string formattedTemplate = template.Replace("{greeting}", greeting.ToLower(culture), StringComparison.OrdinalIgnoreCase)
+                                             .Replace("{name}", name.ToUpper(culture), StringComparison.OrdinalIgnoreCase);
+            return formattedTemplate;
         }
 
         /// <summary>
@@ -69,19 +69,31 @@ namespace Strings
         /// </summary>
         public static string GetRefinedCode(string code)
         {
-            // TODO #8-7. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Remove: https://docs.microsoft.com/en-us/dotnet/api/system.string.remove
-            throw new NotImplementedException();
+            string refinedCode = code;
+
+            int zeroIndex = refinedCode.IndexOf("0", StringComparison.Ordinal);
+            while (zeroIndex != -1)
+            {
+                refinedCode = refinedCode.Remove(zeroIndex, 1);
+                zeroIndex = refinedCode.IndexOf("0", StringComparison.Ordinal);
+            }
+
+            return refinedCode;
         }
 
-        /// <summary>
-        /// Returns refined date - without dash characters.
-        /// </summary>
+            /// <summary>
+            /// Returns refined date - without dash characters.
+            /// </summary>
         public static string GetRefinedDate(string date)
         {
-            // TODO #8-8. Analyze unit tests for the method, and add the method implementation.
-            // Use String.Remove: https://docs.microsoft.com/en-us/dotnet/api/system.string.remove
-            throw new NotImplementedException();
+            string refinedDate = date.Remove(date.IndexOf("-", StringComparison.Ordinal), 1);
+
+            while (refinedDate.Contains('-', StringComparison.Ordinal))
+            {
+                refinedDate = refinedDate.Remove(refinedDate.IndexOf("-", StringComparison.Ordinal), 1);
+            }
+
+            return refinedDate;
         }
     }
 }
